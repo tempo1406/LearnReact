@@ -22,7 +22,7 @@ const DisplayInfor = (props) => {
             document.title = 'Nguyen Ngoc Toan'
         }, 3000)
         console.log('call me useEffect')
-        },[listUsers] // [] Chay 1 lan = componentDidMount
+        },[listUsers] // [] Chay 1 lan = componentDidMount && truyen tham so = componentDidUpdate
     )
 
         return (
