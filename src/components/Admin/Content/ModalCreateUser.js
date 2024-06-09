@@ -1,6 +1,25 @@
 import { Modal } from "bootstrap";
+import { useState } from "react";
+import { FcPlus } from "react-icons/fc";
 
 const ModalCreateUser = ()  => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [username, setUserName] = useState("")
+    const [role, setRole] = useState("USER")
+    const [image, setImage] = useState("")
+    const [previewImage, setPreviewImage] = useState("")
+
+
+    const handleUpLoadImage = (event) => {
+        if (event.target && event.target.files && event.target.files[0]) {
+            setPreviewImage(URL.createObjectURL(event.target.files[0]))
+            setImage(event.target.files[0])
+        } else {
+            // setPreviewImage("");
+        }
+        
+    }
     return (
         <div>
             <button
@@ -13,7 +32,7 @@ const ModalCreateUser = ()  => {
             </button>
 
             <div
-                className="modal fade modal-xl"
+                className="modal fade modal-xl modal-add-user"
                 id="staticBackdrop"
                 data-bs-backdrop="static"
                 tabindex="-1"
@@ -42,7 +61,9 @@ const ModalCreateUser = ()  => {
                                     </label>
                                     <input
                                         type="email"
-                                        className="form-control"                                       
+                                        className="form-control"
+                                        value={email}   
+                                        onChange={(event) => setEmail(event.target.value)}                                    
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -53,7 +74,9 @@ const ModalCreateUser = ()  => {
                                     </label>
                                     <input
                                         type="password"
-                                        className="form-control"                                        
+                                        className="form-control" 
+                                        value={password}  
+                                        onChange={(event) => setPassword(event.target.value)}                                     
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -63,22 +86,32 @@ const ModalCreateUser = ()  => {
                                     <input
                                         type="text"
                                         className="form-control"
+                                        value={username}
+                                        onChange={(event) => setUserName(event.target.value)}
                                     />
                                 </div>
                                 <div className="col-md-4">
                                     <label className="form-label">
                                         Role
                                     </label>
-                                    <select className="form-select">
-                                        <option selected value="USER">User</option>
+                                    <select className="form-select" onChange={(event) => setRole(event.target.value)}>
+                                        <option value="USER">User</option>
                                         <option value="ADMIN">Admin</option>
                                     </select>
                                 </div>
                                 <div className="col-md-12">
-                                    <label className="form-lable">
-                                        Image
+                                    <label className="form-lable lable-upload" htmlFor="lableUpload">
+                                       <FcPlus/> UpLoad File Image
                                     </label>
-                                    <input type="file"></input>
+                                    <input type="file" id="lableUpload" hidden onChange={(event) => handleUpLoadImage(event)}></input>
+                                </div>
+
+                                <div className="col-md-12 img-preview"> 
+                                    { previewImage ? 
+                                        <img src={previewImage}></img>
+                                    : 
+                                    <span>Preview Image</span>
+                                    }                                   
                                 </div>
                             </form>
                         </div>
