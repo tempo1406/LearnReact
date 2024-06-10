@@ -1,15 +1,22 @@
-
+import { FcPlus } from "react-icons/fc";
 import ModalCreateUser from "./ModalCreateUser";
 import './ManageUser.scss';
-const ManageUser = (props) => {
+
+const ManageUser = () => {
     return (
         <div className="manage-user-container">
             <div className="title">Manage User</div>
             <div className="users-content">
-                <div>
-                    <button>Add new users</button>
+                <div className="btn-add-new">
+                    <button 
+                        className="btn btn-primary" 
+                        data-bs-toggle="modal"
+                        data-bs-backdrop="static"
+                        data-bs-target="#staticBackdrop"
+                    > 
+                    <FcPlus/> Add new users</button>
                 </div>
-                <div>
+                <div className="table-user-container">
                     Table users
                 </div>
                 <ModalCreateUser />
