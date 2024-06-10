@@ -2,6 +2,7 @@ import { Modal } from "bootstrap";
 import { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ModalCreateUser = () => {
     // const { data-bs-toggle } = props;
@@ -24,6 +25,7 @@ const ModalCreateUser = () => {
             // setPreviewImage("");
         }
     };
+    
 
     useEffect(() => {
         const myModalEl = document.getElementById("staticBackdrop");
@@ -43,11 +45,26 @@ const ModalCreateUser = () => {
         };
     }, []);
 
-    
+    const validateEmail = (email) => {
+        return String(email)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      };
 
     const handleSubmitCreatUser = async () => {
         //validate
+        const isValidEmail = validateEmail(email)
+        if(!isValidEmail) {
+            toast.error("Invalid Email")
 
+            return
+        }
+        if(!password) {
+            toast.error("Invalid Password")
+            return
+        }
         //call apis
         const data = new FormData();
         data.append("email", email);
@@ -60,7 +77,14 @@ const ModalCreateUser = () => {
             "http://localhost:8081/api/v1/participant",
             data
         );
-        console.log("res: ", res);
+        console.log("res: ", res.data);
+        if(res.data && res.data.EC === 0) {
+            toast.success(res.data.EM)
+        }
+
+        if (res.data && res.data.EC != 0) {
+            toast.error(res.data.EM)
+        }
     };
 
     return (
