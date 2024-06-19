@@ -2,6 +2,7 @@ import { FcPlus } from "react-icons/fc";
 import ModalCreateUser from "./ModalCreateUser";
 import './ManageUser.scss';
 import instance from "../../../utils/axiosCustomize";
+import TableUser from "./TableUser";
 
 const ManageUser = () => {
     return (
@@ -18,7 +19,7 @@ const ManageUser = () => {
                     <FcPlus/> Add new users</button>
                 </div>
                 <div className="table-user-container">
-                    Table users
+                    <TableUser/>
                 </div>
                 <ModalCreateUser />
             </div>

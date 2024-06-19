@@ -94,7 +94,7 @@ const ModalCreateUser = () => {
                 className="modal fade modal-xl modal-add-user"
                 id="staticBackdrop"
                 data-bs-backdrop="static myModal"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
