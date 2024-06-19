@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { postCreatNewUser } from '../../../services/apiService'
 
-const ModalCreateUser = () => {
+const ModalCreateUser = (props) => {
     // const { data-bs-toggle } = props;
 
     // const handleClose = () => setShow(false);
@@ -72,6 +72,7 @@ const ModalCreateUser = () => {
         console.log("res: ", data);
         if(data && data.EC === 0) {
             toast.success(data.EM)
+            await props.fetchListUsers();
         }
 
         if (data && data.EC !== 0) {
@@ -203,6 +204,7 @@ const ModalCreateUser = () => {
                             <button
                                 type="button"
                                 className="btn btn-primary"
+                                data-bs-dismiss="modal"
                                 onClick={() => handleSubmitCreatUser()}
                             >
                                 Save changes
