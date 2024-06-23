@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { postCreatNewUser } from "../../../services/apiService";
+import { putUpdateUsers } from "../../../services/apiService";
 import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
@@ -47,6 +47,7 @@ const ModalUpdateUser = (props) => {
             setRole("USER");
             setImage("");
             setPreviewImage("");
+            props.resetData();
         };
 
         myModalEl.addEventListener("hidden.bs.modal", handleHidden);
@@ -71,14 +72,10 @@ const ModalUpdateUser = (props) => {
             toast.error("Invalid Email");
             return;
         }
-        if (!password) {
-            toast.error("Invalid Password");
-            return;
-        }
 
-        let data = await postCreatNewUser(
-            email,
-            password,
+
+        let data = await putUpdateUsers(
+            dataUpdate.id,
             username,
             role,
             image
