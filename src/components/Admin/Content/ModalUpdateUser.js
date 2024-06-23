@@ -3,13 +3,11 @@ import { useEffect, useState } from "react";
 import { FcPlus } from "react-icons/fc";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { postCreatNewUser } from '../../../services/apiService'
+import { postCreatNewUser } from "../../../services/apiService";
+import _ from "lodash";
 
-const ModalCreateUser = (props) => {
-    // const { data-bs-toggle } = props;
-
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
+const ModalUpdateUser = (props) => {
+    const { dataUpdate } = props;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,6 +15,19 @@ const ModalCreateUser = (props) => {
     const [role, setRole] = useState("USER");
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+
+    useEffect(() => {
+        if (!_.isEmpty(dataUpdate)) {
+            // Update State
+            setEmail(dataUpdate.email);
+            setUserName(dataUpdate.username);
+            setRole(dataUpdate.role);
+            setImage("");
+            if (dataUpdate.image) {
+                setPreviewImage(`data:image/png;base64,${dataUpdate.image}`);
+            }
+        }
+    }, [dataUpdate]);
 
     const handleUpLoadImage = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
@@ -26,10 +37,9 @@ const ModalCreateUser = (props) => {
             // setPreviewImage("");
         }
     };
-    
 
     useEffect(() => {
-        const myModalEl = document.getElementById("staticBackdropCreate");
+        const myModalEl = document.getElementById("staticBackdropUpdate");
         const handleHidden = () => {
             setEmail("");
             setPassword("");
@@ -48,35 +58,40 @@ const ModalCreateUser = (props) => {
 
     const validateEmail = (email) => {
         return String(email)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          );
-      };
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     const handleSubmitCreatUser = async () => {
         //validate
-        const isValidEmail = validateEmail(email)
-        if(!isValidEmail) {
-            toast.error("Invalid Email")
-            return
+        const isValidEmail = validateEmail(email);
+        if (!isValidEmail) {
+            toast.error("Invalid Email");
+            return;
         }
-        if(!password) {
-            toast.error("Invalid Password")
-            return
+        if (!password) {
+            toast.error("Invalid Password");
+            return;
         }
 
-
-        let data = await postCreatNewUser(email, password, username, role, image)
+        let data = await postCreatNewUser(
+            email,
+            password,
+            username,
+            role,
+            image
+        );
         // succes = close modal *
         console.log("res: ", data);
-        if(data && data.EC === 0) {
-            toast.success(data.EM)
+        if (data && data.EC === 0) {
+            toast.success(data.EM);
             await props.fetchListUsers();
         }
 
         if (data && data.EC !== 0) {
-            toast.error(data.EM)
+            toast.error(data.EM);
         }
     };
 
@@ -86,14 +101,14 @@ const ModalCreateUser = (props) => {
                 type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#staticBackdropCreate"
+                data-bs-target="#staticBackdropUpdate"
             >
                 Launch demo modal
             </button> */}
 
             <div
                 className="modal fade modal-xl modal-add-user"
-                id="staticBackdropCreate"
+                id="staticBackdropUpdate"
                 data-bs-backdrop="static myModal"
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
@@ -106,14 +121,14 @@ const ModalCreateUser = (props) => {
                                 className="modal-title fs-5"
                                 id="exampleModalLabel"
                             >
-                                Add a user
+                                Update a user
                             </h1>
                             <button
                                 type="button"
                                 className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
-                                id="staticBackdropCreateLabel"
+                                id="staticBackdropUpdateLabel"
                             ></button>
                         </div>
                         <div className="modal-body">
@@ -124,6 +139,7 @@ const ModalCreateUser = (props) => {
                                         type="email"
                                         className="form-control"
                                         value={email}
+                                        disabled={true}
                                         onChange={(event) =>
                                             setEmail(event.target.value)
                                         }
@@ -137,6 +153,7 @@ const ModalCreateUser = (props) => {
                                         type="password"
                                         className="form-control"
                                         value={password}
+                                        disabled={true}
                                         onChange={(event) =>
                                             setPassword(event.target.value)
                                         }
@@ -159,6 +176,7 @@ const ModalCreateUser = (props) => {
                                     <label className="form-label">Role</label>
                                     <select
                                         className="form-select"
+                                        value={role}
                                         onChange={(event) =>
                                             setRole(event.target.value)
                                         }
@@ -217,4 +235,4 @@ const ModalCreateUser = (props) => {
     );
 };
 
-export default ModalCreateUser;
+export default ModalUpdateUser;

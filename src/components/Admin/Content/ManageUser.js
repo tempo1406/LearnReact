@@ -5,11 +5,12 @@ import instance from "../../../utils/axiosCustomize";
 import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiService";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const ManageUser = (props) => {
 
     const [listUsers, setListUsers] = useState([]);
-    // componentDidMount
+    const [dataUpdate, setDataUpdate] = useState({});
     useEffect(() => {
         fetchListUsers();
     }, []);
@@ -21,6 +22,10 @@ const ManageUser = (props) => {
         }
     };
 
+    const handleClickBtnUpdate = (user) => {
+        setDataUpdate(user)
+    }
+
     return (
         <div className="manage-user-container">
             <div className="title">Manage User</div>
@@ -30,15 +35,22 @@ const ManageUser = (props) => {
                         className="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-backdrop="static"
-                        data-bs-target="#staticBackdrop"
+                        data-bs-target="#staticBackdropCreate"
                     >
                         <FcPlus /> Add new users
                     </button>
                 </div>
                 <div className="table-user-container">
-                    <TableUser listUsers={listUsers} />
+                    <TableUser 
+                    listUsers={listUsers} 
+                    handleClickBtnUpdate={handleClickBtnUpdate}
+                    />
                 </div>
                 <ModalCreateUser fetchListUsers={fetchListUsers} />
+                <ModalUpdateUser 
+                handleClickBtnUpdate={handleClickBtnUpdate}
+                dataUpdate={dataUpdate}
+                />
             </div>
         </div>
     );
