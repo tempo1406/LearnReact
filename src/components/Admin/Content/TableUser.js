@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { getAllUsers } from '../../../services/apiService'
 
 const TableUser = (props) => {
-
     const { listUsers } = props
 
-    
     return (
         <>
             <table className="table table-hover table-bordered">
@@ -29,14 +27,21 @@ const TableUser = (props) => {
                                     <td>{item.email}</td>
                                     <td>{item.role}</td>
                                     <td>
-                                        <button className="btn btn-secondary">View</button>
+                                        <button className="btn btn-secondary" 
+                                        data-bs-toggle="modal"
+                                        data-bs-backdrop="static"
+                                        data-bs-target="#staticBackdropView"
+                                        onClick={() => props.handleClickBtnUpdate(item)}
+                                        >View</button>
                                         <button className="btn btn-warning mx-3" 
                                         data-bs-toggle="modal"
                                         data-bs-backdrop="static"
                                         data-bs-target="#staticBackdropUpdate"
                                         onClick={() => props.handleClickBtnUpdate(item)}
                                         >Update</button>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <button className="btn btn-danger"
+                                        onClick={() => props.handleClickBtnDelete(item)}
+                                        >Delete</button>
                                     </td>
                                 </tr>
                             );

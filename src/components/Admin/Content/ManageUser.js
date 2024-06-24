@@ -6,11 +6,16 @@ import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalViewUser from "./ModalViewUser"
+import ModalDeleteUser from "./ModalDeleteUser"
 
 const ManageUser = (props) => {
 
+    const [showModalDeleteUser, setShowModalDeleteUser] = useState(false)
+
     const [listUsers, setListUsers] = useState([]);
     const [dataUpdate, setDataUpdate] = useState({});
+    const [dataDelete, setDataDelete] = useState({});
     useEffect(() => {
         fetchListUsers();
     }, []);
@@ -29,6 +34,12 @@ const ManageUser = (props) => {
     const resetData = () => {
         setDataUpdate({})
     }
+
+    const handleClickBtnDelete = (user) => {
+        setDataDelete(user)
+        setShowModalDeleteUser(true)
+    }
+
     return (
         <div className="manage-user-container">
             <div className="title">Manage User</div>
@@ -47,6 +58,7 @@ const ManageUser = (props) => {
                     <TableUser 
                     listUsers={listUsers} 
                     handleClickBtnUpdate={handleClickBtnUpdate}
+                    handleClickBtnDelete={handleClickBtnDelete}
                     />
                 </div>
                 <ModalCreateUser fetchListUsers={fetchListUsers} />
@@ -55,6 +67,17 @@ const ManageUser = (props) => {
                 handleClickBtnUpdate={handleClickBtnUpdate}
                 dataUpdate={dataUpdate}
                 resetData={resetData}
+                />
+                <ModalViewUser
+                fetchListUsers={fetchListUsers}
+                handleClickBtnUpdate={handleClickBtnUpdate}
+                dataUpdate={dataUpdate}
+                resetData={resetData}
+                />
+                <ModalDeleteUser
+                dataDelete={dataDelete}
+                show={showModalDeleteUser}
+                setShow={setShowModalDeleteUser}
                 />
             </div>
         </div>
