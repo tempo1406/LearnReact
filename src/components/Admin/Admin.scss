@@ -23,7 +23,10 @@ $icon-size: 35px;
         }
 
         .admin-main {
-
+            .user-pagination {
+                display: flex;
+                justify-content: center;
+            }
         }
     }
     .sidebar-btn-wrapper {
