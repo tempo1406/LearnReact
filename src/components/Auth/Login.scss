@@ -2,6 +2,24 @@
     .header {
         height: 45px;
         text-align: right;
+        padding: 0 100px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        border: 1px solid red;
+
+        button {
+            border: none;
+            padding: 3px 15px;
+            margin-left: 15px;
+            border-radius: 5px;
+            background: #f9f9f9;
+            border: 1px solid;
+
+            &:hover {
+                background-color: white;
+            }
+        }
     }
 
     .title {
@@ -31,6 +49,10 @@
             border-radius: 5px;
             color: white;
             background-color: black;
+        }
+
+        .back {
+            cursor: pointer;
         }
     }
 }
