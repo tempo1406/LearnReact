@@ -63,6 +63,7 @@ const Register = (props) => {
                         value={email}
                         className="form-control"
                         onChange={(event) => setEmail(event.target.value)}
+                        placeholder="Email"
                     />
                 </div>
                 <div className="form-group pass-group">
@@ -72,6 +73,7 @@ const Register = (props) => {
                         type={isShowPassword ? "text" : "password"}
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                        placeholder="Password"
                     />
                     { isShowPassword ? 
                         <span className="icons-eye"
@@ -92,6 +94,7 @@ const Register = (props) => {
                         type={"text"}
                         value={username}
                         onChange={(event) => setUserName(event.target.value)}
+                        placeholder="UserName"
                     />
                 </div>
                 <div>

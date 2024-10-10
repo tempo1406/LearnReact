@@ -39,7 +39,7 @@ const Login = (props) => {
         }
     };
 
-    const handleRegiser = () => {
+    const handleRegister = () => {
         navigate("/register");
     };
 
@@ -47,7 +47,7 @@ const Login = (props) => {
         <div className="login-container">
             <div className="header">
                 <span>Don't have an account yet?</span>
-                <button onClick={() => handleRegiser()}>Sign up</button>
+                <button onClick={() => handleRegister()}>Sign up</button>
             </div>
             <div className="title col-4 mx-auto">NgocToan</div>
             <div className="welcome col-4 mx-auto">Hello, who’s this?</div>
@@ -59,6 +59,7 @@ const Login = (props) => {
                         className="form-control"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
+                        placeholder="Email"
                     />
                 </div>
                 <div className="form-group">
@@ -68,6 +69,7 @@ const Login = (props) => {
                         className="form-control"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                        placeholder="Password"
                     />
                 </div>
                 <span className="forgot-password">Forgot password?</span>
@@ -76,7 +78,7 @@ const Login = (props) => {
                         className="btn-submit"
                         onClick={() => handleLogin()}
                     >
-                        Login to NgocToan
+                        Login to Ngoc Toan
                     </button>
                 </div>
                 <div className="text-center">
